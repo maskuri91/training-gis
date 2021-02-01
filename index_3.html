@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>A Leaflet map!</title>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <style>
+    #map{ width: 900px; height: 500px; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+  <script>
+  // initialize the map
+
+               var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
+                  esriLink =  '<a href="http://esri.com">EsriMap</a>';
+            
+              var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  osmAttrib = '&copy; ' + osmLink + ' Contributors',
+                  
+                  esriUrl = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                  esriAttrib = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';      
+                  
+                 
+
+                var osmMap = L.tileLayer(osmUrl, {name:'osm', attribution: osmAttrib}),
+                 esriMap = L.tileLayer(esriUrl, {name:'esri', attribution: esriAttrib});
+
+
+               var map = L.map('map', {
+                    layers: [osmMap] // only add one!
+                  })
+                  .setView([0.508009,110.454653], 7);
+
+
+                $.getJSON("sanggauhkms.geojson",function(data){
+                        // add GeoJSON layer to the map once the file is loaded
+                        L.geoJson(data).addTo(map);
+                });   
+
+             
+
+              var baseLayers = {
+                "Street": osmMap,
+                "Map": esriMap 
+              
+              };
+
+             L.control.layers(baseLayers,null,{collapsed:false}).addTo(map);     
+        
+
+
+             
+
+
+              
+
+     </script>
+
+  </script>
+</body>
+</html
